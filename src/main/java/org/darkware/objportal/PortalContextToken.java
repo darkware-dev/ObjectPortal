@@ -15,12 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.darkware.boh;
+package org.darkware.objportal;
 
 /**
+ * A {@code PortalContextToken} is a (potentially) simple token which can be used to uniquely
+ * identify a
+ *
  * @author jeff@darkware.org
- * @since 2016-06-09
+ * @since 2016-06-12
  */
-public class BagOfHolding
+public interface PortalContextToken extends Comparable<PortalContextToken>
 {
+    /**
+     * Fetch the identification key for this token. This should uniquely identify the token.
+     *
+     * @return The key as a {@code String}.
+     */
+    String getTokenKey();
+
+    @Override
+    default int compareTo(PortalContextToken portalContextToken)
+    {
+        return this.getTokenKey().compareTo(portalContextToken.getTokenKey());
+    }
 }

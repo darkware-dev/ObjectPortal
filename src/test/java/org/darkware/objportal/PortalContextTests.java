@@ -15,20 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.darkware.boh;
+package org.darkware.objportal;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
  * @author jeff@darkware.org
- * @since 2016-06-09
+ * @since 2016-06-10
  */
-public class EndToEndTests
+@RunWith(Suite.class)
+@Suite.SuiteClasses(
+        {
+            SimplePortalContextTests.class
+        })
+public class PortalContextTests
 {
-    @Test
-    public void goldenPath_store_retrieve()
-    {
 
-    }
 }
