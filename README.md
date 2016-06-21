@@ -49,7 +49,7 @@ of the object manipulation code:
 ### Milestone 2 (v0.6)
 
 * Registering objects via `Supplier` instances.
-* Linking to parent/default contexts
+* Support for constructors that use parameters available in the current context
 
 ### Milestone 3 (v0.7)
 
@@ -58,9 +58,9 @@ of the object manipulation code:
 
 ### Milestone 4 (v0.8)
 
-* Support for constructors that use parameters available in the current context
+* Support for optional injection (skipping injection if no object is available)
+* Support for refusing injection on targets that are already assigned
 
 ### Milestone 5 (v0.9)
 
-* Support for optional injection (skipping injection if no object is available)
-* Support for refusing injection on targets that are already assigned
+* Optimizations
