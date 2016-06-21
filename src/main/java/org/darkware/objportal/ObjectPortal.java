@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * @author jeff@darkware.org
@@ -151,6 +152,33 @@ public final class ObjectPortal
     public static <T> void place(final PortalContextToken token, final Class<T> targetClass, T value)
     {
         ObjectPortal.portalProvider.getPortalContext(token).place(targetClass, value);
+    }
+
+    /**
+     * Place the given object in the default {@link PortalContext}. This will allow the object to be used for
+     * retrieval and dependency injection via the supplied class.
+     *
+     * @param targetClass The class to register the object under.
+     * @param supplier A {@link Supplier} which will be used to build the object the first time it's needed.
+     * @param <T> The parameterized object type.
+     */
+    public static <T> void place(final Class<T> targetClass, Supplier<? extends T> supplier)
+    {
+        ObjectPortal.portalProvider.getPortalContext().place(targetClass, supplier);
+    }
+
+    /**
+     * Place the given {@link Supplier} for a {@link PortalContext} matching the token. This will allow the object to be
+     * built upon request for retrieval and dependency injection via the supplied class.
+     *
+     * @param token The token identifying the {@link PortalContext} to place the value into.
+     * @param targetClass The class to register the object under.
+     * @param supplier A {@link Supplier} which will be used to build the object the first time it's needed.
+     * @param <T> The parameterized object type.
+     */
+    public static <T> void place(final PortalContextToken token, final Class<T> targetClass, Supplier<? extends T> supplier)
+    {
+        ObjectPortal.portalProvider.getPortalContext(token).place(targetClass, supplier);
     }
 
     /**

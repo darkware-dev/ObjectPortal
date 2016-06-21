@@ -21,6 +21,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.util.function.Supplier;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -132,6 +134,38 @@ public class ObjectPortalFacadeTests
     public void place_other()
     {
         ObjectPortal.place(this.newToken, Integer.class, 42);
+
+        verify(this.provider).getPortalContext(this.newToken);
+        verifyNoMoreInteractions(this.provider);
+    }
+
+    @Test
+    public void placeSupplier_default()
+    {
+        ObjectPortal.place(Integer.class, new Supplier<Integer>()
+        {
+            @Override
+            public Integer get()
+            {
+                return 42;
+            }
+        });
+
+        verify(this.provider).getPortalContext();
+        verifyNoMoreInteractions(this.provider);
+    }
+
+    @Test
+    public void placeSupplier_other()
+    {
+        ObjectPortal.place(this.newToken, Integer.class, new Supplier<Integer>()
+        {
+            @Override
+            public Integer get()
+            {
+                return 99;
+            }
+        });
 
         verify(this.provider).getPortalContext(this.newToken);
         verifyNoMoreInteractions(this.provider);
