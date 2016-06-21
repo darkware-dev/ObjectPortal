@@ -17,6 +17,7 @@
 
 package org.darkware.objportal;
 
+import org.darkware.objportal.examples.SimpleTestClass;
 import org.junit.Before;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.*;

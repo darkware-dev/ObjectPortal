@@ -20,6 +20,7 @@ package org.darkware.objportal;
 import org.darkware.objportal.error.DefaultTokenRefusedException;
 import org.darkware.objportal.error.NoRegisteredInstanceError;
 import org.darkware.objportal.error.ObjectCreationError;
+import org.darkware.objportal.examples.SimpleTestClass;
 import org.junit.Test;
 
 import java.util.HashMap;

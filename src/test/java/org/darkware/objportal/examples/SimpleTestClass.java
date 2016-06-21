@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.darkware.objportal;
+package org.darkware.objportal.examples;
 
 import javax.inject.Inject;
 
