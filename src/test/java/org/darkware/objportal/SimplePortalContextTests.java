@@ -35,6 +35,9 @@ import static org.junit.Assert.*;
  */
 public class SimplePortalContextTests
 {
+    protected static final Integer TEST_INTEGER = 42;
+    protected static final String TEST_STRING = "Beggars can't be choosers, but thieves can.";
+
     protected SimplePortalContext context;
 
     @Before
@@ -54,7 +57,8 @@ public class SimplePortalContextTests
     {
         Integer iVal = 42;
 
-        this.context.place(Integer.class, iVal);
+        this.context.place(Integer.class, SimplePortalContextTests.TEST_INTEGER);
+        this.context.place(String.class, SimplePortalContextTests.TEST_STRING);
 
         assertSame(iVal, this.context.take(Integer.class));
     }
@@ -62,14 +66,7 @@ public class SimplePortalContextTests
     @Test
     public void storeRetrieve_supplier()
     {
-        this.context.place(Integer.class, new Supplier<Integer>()
-        {
-            @Override
-            public Integer get()
-            {
-                return 42;
-            }
-        });
+        this.context.placeSource(Integer.class, () -> 42);
 
         assertTrue(this.context.hasInstance(Integer.class));
         assertEquals(new Integer(42), this.context.take(Integer.class));
@@ -157,6 +154,4 @@ public class SimplePortalContextTests
             throw new Exception("Cannot be instantiated.");
         }
     }
-
-
 }

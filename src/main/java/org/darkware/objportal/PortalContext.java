@@ -88,5 +88,5 @@ public interface PortalContext
      * @param supplier A {@link Supplier} which can createContext objects of the given class.
      * @param <T> The type of the object being registered.
      */
-    <T> void place(Class<T> instanceClass, Supplier<? extends T> supplier);
+    <T> void placeSource(Class<T> instanceClass, Supplier<? extends T> supplier);
 }

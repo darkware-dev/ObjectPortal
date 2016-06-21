@@ -134,8 +134,7 @@ public class SimplePortalContext implements PortalContext
         this.objectStore.put(instanceClass, object);
     }
 
-    @Override
-    public <T> void place(final Class<T> instanceClass, Supplier<? extends T> supplier)
+    public <T> void placeSource(final Class<T> instanceClass, Supplier<? extends T> supplier)
     {
         this.supplierStore.put(instanceClass, supplier);
     }

@@ -19,7 +19,6 @@ package org.darkware.objportal;
 
 import org.darkware.objportal.error.DefaultTokenRefusedException;
 import org.darkware.objportal.error.NoRegisteredInstanceError;
-import org.darkware.objportal.error.ObjectCreationError;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -164,7 +163,7 @@ public final class ObjectPortal
      */
     public static <T> void place(final Class<T> targetClass, Supplier<? extends T> supplier)
     {
-        ObjectPortal.portalProvider.getPortalContext().place(targetClass, supplier);
+        ObjectPortal.portalProvider.getPortalContext().placeSource(targetClass, supplier);
     }
 
     /**
@@ -178,7 +177,7 @@ public final class ObjectPortal
      */
     public static <T> void place(final PortalContextToken token, final Class<T> targetClass, Supplier<? extends T> supplier)
     {
-        ObjectPortal.portalProvider.getPortalContext(token).place(targetClass, supplier);
+        ObjectPortal.portalProvider.getPortalContext(token).placeSource(targetClass, supplier);
     }
 
     /**
