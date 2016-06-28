@@ -20,7 +20,6 @@ package org.darkware.objportal;
 import org.darkware.objportal.error.ObjectCreationError;
 
 import javax.inject.Inject;
-import javax.swing.text.html.Option;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -124,6 +123,7 @@ public class ObjectBuilder<T> implements Supplier<T>
      */
     protected void setupConstructor()
     {
+        @SuppressWarnings("unchecked")
         Optional<Constructor<T>> result = Stream.of((Constructor<T>[])this.objectClass.getConstructors())
                                                 .filter(this::canSupplyParameters)
                                                 .sorted(this.conComparator)
