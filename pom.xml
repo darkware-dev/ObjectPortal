@@ -24,6 +24,13 @@
     <groupId>org.darkware.objportal</groupId>
     <artifactId>objectPortal</artifactId>
     <version>0.6-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>ObjectPortal Core</name>
+    <description>
+        The base library for a modular, testable dependency injection and context management system.
+    </description>
+    <url>http://darkware.org/project/objectportal</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
