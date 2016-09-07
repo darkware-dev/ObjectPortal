@@ -25,7 +25,7 @@ package org.darkware.objportal;
  * @author jeff@darkware.org
  * @since 2016-06-12
  */
-public class SingletonPortalProvider implements PortalProvider
+public class SingletonPortalProvider extends BasePortalProvider
 {
     /** The active {@link PortalContext}. */
     private PortalContext context;
@@ -54,6 +54,12 @@ public class SingletonPortalProvider implements PortalProvider
     public SingletonPortalProvider()
     {
         this(new SimplePortalContext());
+    }
+
+    @Override
+    protected PortalContext instantiateNewContext(final PortalContextToken token)
+    {
+        return null;
     }
 
     /**

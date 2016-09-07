@@ -70,7 +70,33 @@ public class SimpleProviderTests
 
         assertThat(defToken).isNotEqualByComparingTo(token);
         assertThat(this.provider.getPortalContext(token)).isNotSameAs(this.provider.getPortalContext(defToken));
+    }
 
+    @Test
+    public void delegate_set()
+    {
+        PortalContext delegate = new SimplePortalContext();
+
+        assertThat(this.provider.getDefaultDelegate()).isNull();
+
+        this.provider.useDefaultDelegate(delegate);
+
+        assertThat(this.provider.getDefaultDelegate()).isNotNull().isSameAs(delegate);
+    }
+
+
+    @Test
+    public void context_requestNewWithDelegate()
+    {
+        PortalContext delegate = new SimplePortalContext();
+        delegate.place(Integer.class, 99);
+        this.provider.useDefaultDelegate(delegate);
+
+        PortalContextToken token = this.provider.requestNewContext();
+        PortalContext newContext = this.provider.createContext(token);
+        newContext.place(String.class, "Test");
+
+        assertThat(newContext.take(Integer.class)).isEqualTo(99);
     }
 
     @Test

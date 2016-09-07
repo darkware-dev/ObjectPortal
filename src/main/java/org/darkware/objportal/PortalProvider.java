@@ -62,6 +62,23 @@ public interface PortalProvider
     PortalContextToken getDefaultToken();
 
     /**
+     * Declare a default {@link PortalContext} to assign as a delegate context for all contexts created by this
+     * provider in the future. This may be set to {@code null} to prevent any delegate from being set.
+     *
+     * @param context The {@link PortalContext} to assign.
+     */
+    void useDefaultDelegate(final PortalContext context);
+
+    /**
+     * Fetch the {@link PortalContext} newly created contexts will use as a delegate. If no default delegate is
+     * registered, this will be {@code null} and no context will be assigned.
+     *
+     * @return The {@link PortalContext} that will be assigned as a delegate, or {@code null} if no delegate will
+     * be used.
+     */
+    PortalContext getDefaultDelegate();
+
+    /**
      * Requests the creation of a new {@link PortalContext} and implicitly a new {@link PortalContextToken}. This can
      * be used to request the creation of new {@code PortalContexts} for different subsystems, or possibly to request
      * creating entirely clean contexts.

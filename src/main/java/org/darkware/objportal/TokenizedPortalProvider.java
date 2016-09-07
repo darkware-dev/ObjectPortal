@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author jeff@darkware.org
  * @since 2016-06-12
  */
-public abstract class TokenizedPortalProvider implements PortalProvider
+public abstract class TokenizedPortalProvider extends BasePortalProvider implements PortalProvider
 {
     private final Map<PortalContextToken, PortalContext> contexts;
     private boolean autoCreate;
@@ -71,6 +71,7 @@ public abstract class TokenizedPortalProvider implements PortalProvider
                 if (this.autoCreate)
                 {
                     context = this.createContext(token);
+
                     this.contexts.put(token, context);
                 }
                 else
@@ -83,14 +84,7 @@ public abstract class TokenizedPortalProvider implements PortalProvider
         }
     }
 
-    /**
-     * Create a new {@link PortalContext} suitable for the given token.
-     *
-     * @param token The {@link PortalContextToken} which will be associated with the new context.
-     * @return A new {@link PortalContext} object.
-     */
-    @SuppressWarnings("unused")
-    protected PortalContext createContext(final PortalContextToken token)
+    protected PortalContext instantiateNewContext(final PortalContextToken token)
     {
         return new SimplePortalContext();
     }
@@ -106,4 +100,5 @@ public abstract class TokenizedPortalProvider implements PortalProvider
     {
         this.contexts.put(token, context);
     }
+
 }
