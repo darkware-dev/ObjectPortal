@@ -31,6 +31,15 @@ import java.util.function.Supplier;
 public interface PortalContext
 {
     /**
+     * Declare a delegate {@link PortalContext} to defer to if the current context does not have a required
+     * instance for injection. The referred context may itself defer to another context, etc. There is no implied
+     * cycle detection. Cyclic dependencies will have a high probability of causing stack overflow exceptions.
+     *
+     * @param parent The {@link PortalContext} to delegate instance lookups to if local lookups fail.
+     */
+    void useDelegate(final PortalContext parent);
+
+    /**
      * Creates a new concrete instance of the given class. This requires that a suitable default (parameterless)
      * constructor exists for the class.
      *

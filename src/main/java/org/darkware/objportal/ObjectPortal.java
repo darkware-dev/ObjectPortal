@@ -19,6 +19,7 @@ package org.darkware.objportal;
 
 import org.darkware.objportal.error.DefaultTokenRefusedException;
 import org.darkware.objportal.error.NoRegisteredInstanceError;
+import org.darkware.objportal.error.UnrecognizedTokenException;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -45,8 +46,35 @@ public final class ObjectPortal
     }
 
     /**
-     * Creates a new concrete instance of the given class, resolving injection requests against the . This requires that a suitable default (parameterless)
-     * constructor exists for the class.
+     * Fetch the default {@link PortalContext}.
+     *
+     * @return The {@link PortalContext} provided for the default token.
+     * @see #getContext(PortalContextToken)
+     */
+    public static PortalContext getDefaultContext()
+    {
+        return ObjectPortal.getContext(ObjectPortal.getDefaultContextToken());
+    }
+
+    /**
+     * Fetch the {@link PortalContext} for the given token.
+     * <p>
+     * Most code should prefer the high level, direct-access methods. Access to the {@link PortalContext} is provided
+     * in order to modify the behavior of the {@code PortalContext} or to allow code to capture a direct reference
+     * to the context (though this is probably ill-advised in most cases).
+     *
+     * @param token The {@link PortalContextToken} of the context to fetch.
+     * @return A {@link PortalContext} for the given token.
+     * @throws UnrecognizedTokenException If the token is not recognized.
+     */
+    public static PortalContext getContext(final PortalContextToken token)
+    {
+        return ObjectPortal.portalProvider.getPortalContext(token);
+    }
+
+    /**
+     * Creates a new concrete instance of the given class, resolving injection requests against the . This requires
+     * that a suitable default (no parameter) constructor exists for the class.
      *
      * @param instanceClass The class of object to createContext.
      * @param <T> The parameterized type of the class.
@@ -58,7 +86,7 @@ public final class ObjectPortal
     }
 
     /**
-     * Creates a new concrete instance of the given class. This requires that a suitable default (parameterless)
+     * Creates a new concrete instance of the given class. This requires that a suitable default (no parameter)
      * constructor exists for the class.
      *
      * @param token The token identifying the context to resolve the object against.

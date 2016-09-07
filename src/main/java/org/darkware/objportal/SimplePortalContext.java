@@ -24,6 +24,9 @@ import org.darkware.objportal.error.ObjectCreationError;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 
 /**
@@ -36,6 +39,7 @@ public class SimplePortalContext implements PortalContext
 {
     private final Map<Class, Object> objectStore;
     private final Map<Class, Supplier> supplierStore;
+    private AtomicReference<PortalContext> delegateContext;
 
     /**
      * Creates a new implementation of {@link PortalContext} that uses simple object storage which
@@ -47,6 +51,13 @@ public class SimplePortalContext implements PortalContext
 
         this.objectStore = new ConcurrentHashMap<>();
         this.supplierStore = new ConcurrentHashMap<>();
+        this.delegateContext = new AtomicReference<>();
+    }
+
+    @Override
+    public void useDelegate(final PortalContext parent)
+    {
+        this.delegateContext.set(parent);
     }
 
     @Override
@@ -122,6 +133,17 @@ public class SimplePortalContext implements PortalContext
                 this.place(queryClass, instanceObject);
 
                 return instanceObject;
+            }
+
+            // Try to fetch an object from the delegate context, if one exists
+            // ... We go through some extra effort here. Even a trivial implementation should technically be thread
+            //     safe, but some explicit safety gives us very predictable, explicit behavior.
+            synchronized (this.delegateContext)
+            {
+                if (this.delegateContext.get() != null)
+                {
+                    return this.delegateContext.get().take(queryClass);
+                }
             }
         }
 

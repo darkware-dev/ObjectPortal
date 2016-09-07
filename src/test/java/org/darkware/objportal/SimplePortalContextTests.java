@@ -23,8 +23,6 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.function.Supplier;
-
 import static org.junit.Assert.*;
 
 /**
@@ -58,6 +56,20 @@ public class SimplePortalContextTests
         Integer iVal = 42;
 
         this.context.place(Integer.class, SimplePortalContextTests.TEST_INTEGER);
+        this.context.place(String.class, SimplePortalContextTests.TEST_STRING);
+
+        assertSame(iVal, this.context.take(Integer.class));
+    }
+
+    @Test
+    public void storeRetrieve_delegate()
+    {
+        Integer iVal = 42;
+
+        PortalContext delegate = new SimplePortalContext();
+        delegate.place(Integer.class, SimplePortalContextTests.TEST_INTEGER);
+
+        this.context.useDelegate(delegate);
         this.context.place(String.class, SimplePortalContextTests.TEST_STRING);
 
         assertSame(iVal, this.context.take(Integer.class));
